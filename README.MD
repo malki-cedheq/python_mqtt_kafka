@@ -24,9 +24,17 @@
 
 `git pull`
 
-# Requisitos
+# Utilizando o ambiente
 
-## Criação de arquivo .env no diretório raiz
+## Requisitos
+
+> [Docker](https://www.docker.com/)
+
+> [Python ^3.10](https://www.python.org/)
+
+> [Poetry](https://python-poetry.org/)
+
+### Criação de arquivo .env no diretório raiz
 
 ```
 MQTT_USERNAME=
@@ -39,16 +47,6 @@ KAFKA_PASSWORD=
 KAFKA_PORT=
 KAFKA_BROKER=
 ```
-
-# Utilizando o ambiente
-
-## Requisitos
-
-> [Docker](https://www.docker.com/)
-
-> [Python ^3.10](https://www.python.org/)
-
-> [Poetry](https://python-poetry.org/)
 
 ## Executando serviços com Docker
 
