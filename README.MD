@@ -50,15 +50,17 @@ KAFKA_BROKER=
 
 ## Executando serviços com Docker
 
-### Criando imagem Docker
-
-No diretório raiz executar:
-
-`docker build --tag mqtt_kafka --file Dockerfile.consumer .`
-
 ### Criando ambiente Docker mqtt+kafka
 
 `docker compose -f docker-compose.yml up -d`
+
+#### Interagindo via shell com o mqtt Docker
+
+`docker exec -it mosquitto_container sh`
+
+#### Criando um usuário autenticado via shell
+
+`mosquitto_passwd -c /mosquitto/config/password.txt nome_usuario`
 
 ## Instalação das dependências
 
