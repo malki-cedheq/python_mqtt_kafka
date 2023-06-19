@@ -40,6 +40,19 @@ services:
      - 9092:9092
      - 29092:29092
     restart: unless-stopped
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto_container
+    volumes:
+      - ./mosquitto:/mosquitto
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883   
+    restart: unless-stopped
+
 volumes:
   zookeeper:
   kafka:
