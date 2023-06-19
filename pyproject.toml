@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "mqtt_kafka"
+version = "0.1.0"
+description = "Interação MQTT e Kafka"
+authors = ["malki-çedheq <malkicedheq@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+paho-mqtt = "*"
+pykafka = "*"
+python-dotenv = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

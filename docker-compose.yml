@@ -1,0 +1,45 @@
+# https://docs.confluent.io/platform/current/installation/docker/operations/monitoring.html#use-jmx-monitor-docker-deployments
+# https://adkarigar004.medium.com/getting-started-with-apache-kafka-and-prometheus-jmx-javaagent-on-windows-dockertoolbox-b1df3fe5fc7e
+
+version: '3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper
+    environment:
+     ZOOKEEPER_CLIENT_PORT : 2181
+     ZOOKEEPER_TICK_TIME : 2000
+
+    volumes:
+      - zookeeper:/zookeeper
+    ports:
+      - 2181:2181
+    restart: unless-stopped
+    
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID : 1
+      KAFKA_ZOOKEEPER_CONNECT : zookeeper:2181
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_LISTENERS : PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP : PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME : PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR : 1
+      KAFKA_JMX_HOSTNAME : kafka
+      KAFKA_JMX_PORT : 9101
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=9101"      
+
+    volumes:
+      - kafka:/kafka
+    ports:
+     - 9101:9101
+     - 9092:9092
+     - 29092:29092
+    restart: unless-stopped
+volumes:
+  zookeeper:
+  kafka:

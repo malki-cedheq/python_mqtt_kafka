@@ -1,0 +1,29 @@
+# Production Build
+FROM homolog-harbor.ufpe.br/dockerhub/library/python:3.10-alpine
+WORKDIR /mqtt_kafka_consumer
+
+#alimentar as variáveis com os valores adequados
+ENV MQTT_USERNAME ENV
+ENV MQTT_PASSWORD ENV
+ENV MQTT_PORT ENV 
+ENV MQTT_BROKER ENV
+
+ENV KAFKA_USERNAME ENV
+ENV KAFKA_PASSWORD ENV
+ENV KAFKA_PORT ENV
+ENV KAFKA_BROKER ENV
+
+RUN pip3 install --upgrade pip
+RUN pip3 install poetry
+
+# Install dependencies
+COPY pyproject.toml pyproject.toml
+RUN poetry config virtualenvs.create false
+RUN poetry install
+COPY . .  
+
+RUN addgroup -S mqtt_kafka_consumer && adduser -D mqtt_kafka_consumer -G mqtt_kafka_consumer 
+RUN chown -R mqtt_kafka_consumer:mqtt_kafka /mqtt_kafka_consumer
+USER mqtt_kafka_consumer
+
+CMD ["poetry", "run" , "python3","mqtt_kafka_bridge_sub.py"]
