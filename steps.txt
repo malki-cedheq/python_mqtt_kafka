@@ -1,0 +1,35 @@
+# http://www.liferaysavvy.com/2021/07/kafka-monitoring-with-prometheus.html
+# https://www.metricfire.com/blog/kafka-monitoring/
+
+# Requeriments JAVA >= 7 (java -version)
+sudo apt update
+sudo apt install default-jre
+java -version
+sudo apt install default-jdk
+javac -version
+
+# Download agent e config
+cd /home/$USER
+mkdir prometheus
+cd prometheus
+
+# FAZER DOWNLOAD DO RAW 
+# github do prometheus jmx exporter https://github.com/prometheus/jmx_exporter
+
+#configuração do zookeeper
+https://github.com/prometheus/jmx_exporter/blob/main/example_configs/zookeeper.yaml
+
+#configuração do kafka 2.0.0
+https://github.com/prometheus/jmx_exporter/blob/main/example_configs/kafka-2_0_0.yml
+
+#configuração do kafka 0.8.2
+https://github.com/prometheus/jmx_exporter/blob/main/example_configs/kafka-0-8-2.yml
+
+# links dos agents https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/
+https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.18.0/jmx_prometheus_javaagent-0.18.0.jar
+
+# alterar kafka env KAFK_OPTS
+KAFKA_OPTS="-javaagent:/prometheus/jmx_prometheus_javaagent-0.18.0.jar=$PROMETHEUS_PORT:/prometheus/kafka_broker.yml"
+
+# configuração do prometheus
+https://github.com/LiferaySavvy/kafka-monitoring/blob/master/prometheus.yml
