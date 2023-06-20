@@ -3,47 +3,27 @@
 
 version: '3'
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.0
-    container_name: zookeeper
-    environment:
-     ZOOKEEPER_CLIENT_PORT : 2181
-     ZOOKEEPER_TICK_TIME : 2000
-
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
     volumes:
-      - zookeeper:/zookeeper
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - 2181:2181
+      - 9090:9090   
     restart: unless-stopped
-    
-  kafka:
-    image: confluentinc/cp-kafka:7.4.0
-    container_name: kafka
-    depends_on:
-      - zookeeper
-    environment:
-      KAFKA_BROKER_ID : 1
-      KAFKA_ZOOKEEPER_CONNECT : zookeeper:2181
-      KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_ADVERTISED_LISTENERS : PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP : PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME : PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR : 1
-      KAFKA_JMX_HOSTNAME : kafka
-      KAFKA_JMX_PORT : 9101
-      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=9101"      
 
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
     volumes:
-      - kafka:/kafka
+      - ./grafana:/var/lib/grafana
     ports:
-     - 9101:9101
-     - 9092:9092
-     - 29092:29092
+      - "3000:3000"
     restart: unless-stopped
 
   mosquitto:
     image: eclipse-mosquitto
-    container_name: mosquitto_container
+    container_name: mosquitto
     volumes:
       - ./mosquitto:/mosquitto
       - ./mosquitto/config:/mosquitto/config
@@ -53,6 +33,48 @@ services:
       - 1883:1883   
     restart: unless-stopped
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper
+    environment:
+     ZOOKEEPER_CLIENT_PORT : 9091
+     ZOOKEEPER_TICK_TIME : 2000
+
+    volumes:
+      - zookeeper:/zookeeper
+    ports:
+      - 9091:9091
+    restart: unless-stopped
+    
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+      - prometheus
+    environment:
+      CLUSTER_ID : 'q1Sh-9_ISia_zwGINzRvyQ'
+      KAFKA_BROKER_ID : 1
+      KAFKA_ZOOKEEPER_CONNECT : zookeeper:9091
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_INTER_BROKER_LISTENER_NAME : PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP : PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS : PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092      
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR : 1
+      KAFKA_METRICS: 9093      
+      KAFKA_OPTS: "-javaagent:/kafka/prometheus/jmx_prometheus_javaagent-0.18.0.jar=9093:/kafka/prometheus/kafka_broker.yml"                            
+    volumes:
+      - kafka:/kafka
+      - ./prometheus:/kafka/prometheus
+    ports:
+     - 9092:9092
+     - 9093:9093
+     - 29092:29092
+    restart: unless-stopped
+
 volumes:
   zookeeper:
   kafka:
+  mosquitto:
+  prometheus:
+  grafana:
