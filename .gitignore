@@ -1,10 +1,10 @@
 #ignores
 .env
 __pycache__/
-/mosquitto/data/*
-/mosquitto/log/*
+#/mosquitto/data/*
+#/mosquitto/log/*
 /prometheus/*
-/grafana/alerting/*
+#/grafana/alerting/*
 
 #dont ignore
 !/mosquitto
