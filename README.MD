@@ -75,7 +75,7 @@ KAFKA_BROKER=
 ## KAFKA (producer + consumer)
 
 1. kafka_producer.py realiza produz mensagens em um tópico do broker do cluster KAFKA.
-2. mqtt_kafka_bridge_sub.py consome mensagens de um tópico do broker do cluster KAFKA.
+2. kafka_consumer.py consome mensagens de um tópico do broker do cluster KAFKA.
 
 ## MQTT + KAFKA (modo paralelo)
 
