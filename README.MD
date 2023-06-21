@@ -74,47 +74,110 @@ KAFKA_BROKER=
 
 \*SUBSTITUIR |ZOOKEEPER POR KRAF
 
-Apache Kafka packaged by Bitnami
+## Apache Kafka packaged by Bitnami
 
-    https://hub.docker.com/r/bitnami/kafka
+`https://hub.docker.com/r/bitnami/kafka`
 
-Monitoring Kafka
+## Monitoring Kafka
 
-    https://hub.docker.com/r/obsidiandynamics/kafdrop
+`https://hub.docker.com/r/obsidiandynamics/kafdrop`
 
-Python pyKafka an paho.MQTT - Integrate Kafka and MQTT - How to connect MQTT and Kafka
+## Python pyKafka an paho.MQTT - Integrate Kafka and MQTT - How to connect MQTT and Kafka
 
-    https://www.youtube.com/watch?v=FDCTQ47oXUg
-    https://medium.com/python-point/mqtt-and-kafka-8e470eff606b
+```
+https://www.youtube.com/watch?v=FDCTQ47oXUg
 
-Passo a passo
+https://medium.com/python-point/mqtt-and-kafka-8e470eff606b
+```
+
+## Vídeos
 
 1. Docker compose Kafkar + Zookeeper + KafDrop
 
-   1. https://www.youtube.com/watch?v=EV3KiPgE760
+   1. `https://www.youtube.com/watch?v=EV3KiPgE760`
 
-   2. https://www.youtube.com/watch?v=8aUZ1J7r8hM
+   2. `https://www.youtube.com/watch?v=8aUZ1J7r8hM`
 
 2. Criando consumers e producers em Python
 
-   https://www.youtube.com/watch?v=yT-GYVssdEg
+   `https://www.youtube.com/watch?v=yT-GYVssdEg`
 
-PROMETHEUS
+## PROMETHEUS
 
-    https://www.confluent.io/ko-kr/blog/monitor-kafka-clusters-with-prometheus-grafana-and-confluent/
+```
+https://www.confluent.io/ko-kr/blog/monitor-kafka-clusters-with-prometheus-grafana-and-confluent/
 
-    https://www.metricfire.com/blog/kafka-monitoring/
+https://www.metricfire.com/blog/kafka-monitoring/
 
-    https://medium.com/@alvarobacelar/monitorando-um-cluster-kafka-com-ferramentas-open-source-a4032836dc79
+https://medium.com/@alvarobacelar/monitorando-um-cluster-kafka-com-ferramentas-open-source-a4032836dc79
 
-    https://sridharan-rg.medium.com/kafka-metrics-monitoring-with-prometheus-15b0aebea16b
+https://sridharan-rg.medium.com/kafka-metrics-monitoring-with-prometheus-15b0aebea16b
 
-    https://computingforgeeks.com/monitor-apache-kafka-with-prometheus-and-grafana/
+https://computingforgeeks.com/monitor-apache-kafka-with-prometheus-and-grafana/
+```
 
-Which Metrics to Monitor in Kafka?
+### Which Metrics to Monitor in Kafka?
 
-    https://www.youtube.com/watch?v=XXLe0KNEbR4
+`https://www.youtube.com/watch?v=XXLe0KNEbR4`
 
-Setting up Kafka on Prometheus Tutorial
+### Setting up Kafka on Prometheus Tutorial
 
-    https://www.youtube.com/watch?v=hL82UnQMnGM
+`https://www.youtube.com/watch?v=hL82UnQMnGM`
+
+## STEPS
+
+```
+http://www.liferaysavvy.com/2021/07/kafka-monitoring-with-prometheus.html
+
+https://www.metricfire.com/blog/kafka-monitoring/
+```
+
+## Requeriments JAVA >= 7 (java -version)
+
+```
+sudo apt update
+sudo apt install default-jre
+java -version
+sudo apt install default-jdk
+javac -version
+```
+
+## Download agent e config
+
+```
+cd /home/$USER
+mkdir prometheus
+cd prometheus
+```
+
+## FAZER DOWNLOAD DO RAW PARA EVITAR ERROS
+
+### github do prometheus jmx exporter
+
+`https://github.com/prometheus/jmx_exporter`
+
+#### configuração do zookeeper
+
+`https://github.com/prometheus/jmx_exporter/blob/main/example_configs/zookeeper.yaml`
+
+#### configuração do kafka 2.0.0
+
+`https://github.com/prometheus/jmx_exporter/blob/main/example_configs/kafka-2_0_0.yml`
+
+#### configuração do kafka 0.8.2
+
+`https://github.com/prometheus/jmx_exporter/blob/main/example_configs/kafka-0-8-2.yml`
+
+#### links dos agents
+
+> https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/
+
+`https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.18.0/jmx_prometheus_javaagent-0.18.0.jar`
+
+# alterar kafka env KAFK_OPTS
+
+`KAFKA_OPTS="-javaagent:/prometheus/jmx_prometheus_javaagent-0.18.0.jar=$PROMETHEUS_PORT:/prometheus/kafka_broker.yml"`
+
+# configuração do prometheus
+
+`https://github.com/LiferaySavvy/kafka-monitoring/blob/master/prometheus.yml`
