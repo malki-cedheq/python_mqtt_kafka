@@ -70,6 +70,23 @@ KAFKA_BROKER=
 
 `poetry run python3 arquivo.py`
 
+# Scripts Exemplo
+
+## KAFKA (producer + consumer)
+
+1. kafka_producer.py realiza produz mensagens em um tópico do broker do cluster KAFKA.
+2. mqtt_kafka_bridge_sub.py consome mensagens de um tópico do broker do cluster KAFKA.
+
+## MQTT + KAFKA (modo paralelo)
+
+1. mqtt_kafka_parallel_pub.py realiza publicação de uma mensagem em um tópico do broker MQTT e produz a mesma mensagem no tópico de mesmo nome do broker do cluster KAFKA.
+2. mqtt_kafka_parallel_sub.py realiza subscrição em um tópico do broker MQTT, e consome as mensagens que são produzidas no mesmo tópico do broker do cluster KAFKA.
+
+## MQTT + KAFKA (modo serial)
+
+1. mqtt_kafka_bridge_pub.py realiza publicação em um tópico do broker MQTT
+2. mqtt_kafka_bridge_sub.py realiza subscrição em um tópico do broker MQTT, e ao receber uma nova mensagem no referido tópico encaminha esta mensagem, produz, no mesmo tópico do broker do cluster KAFKA.
+
 # Referências externas
 
 \*SUBSTITUIR |ZOOKEEPER POR KRAF
