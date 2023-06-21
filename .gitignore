@@ -1,2 +1,7 @@
 .env
 __pycache__/
+prometheus/wal/
+prometheus/chunk_head/
+prometheus/01H3FCS*
+grafana/grafana.db
+mosquitto/data/mosquitto.db
