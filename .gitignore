@@ -1,22 +1,24 @@
 #ignores
 .env
 __pycache__/
-#/mosquitto/data/*
-#/mosquitto/log/*
+/mosquitto/data/*
+/mosquitto/log/*
 /prometheus/*
-#/grafana/alerting/*
+/grafana/*
 
 #dont ignore
 !/mosquitto
 !/mosquitto/config
 !/mosquitto/mosquitto.conf
 !/mosquitto/password.txt
-!/mosquitto/data
-!/mosquitto/log
+!/mosquitto/data/.disposable
+!/mosquitto/log/.disposable
+
 !/prometheus
 !/prometheus/
 !/prometheus/jmx_prometheus_javaagent-0.18.0.jar
 !/prometheus/kafka_broker.yml
 !/prometheus/prometheus.yml
-!/grafana
-!/grafana/
+!/prometheus/.disposable
+
+!/grafana/.disposable
