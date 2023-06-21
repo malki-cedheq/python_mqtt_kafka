@@ -4,6 +4,8 @@
 
 [Kafka Official Documentation](https://kafka.apache.org/documentation/)
 
+[Kafka performance monitoring metrics](https://www.metricfire.com/blog/kafka-performance-monitoring-metrics/)
+
 # Acessando o Repositório
 
 [Repo no GitHub](https://github.com/malki-cedheq/python_mqtt_kafka)
