@@ -1,0 +1,17 @@
+{
+	"ulid": "01H3FCSPRPBTGY2425FHNY6E09",
+	"minTime": 1687218106532,
+	"maxTime": 1687219200000,
+	"stats": {
+		"numSamples": 376636,
+		"numSeries": 4787,
+		"numChunks": 4787
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01H3FCSPRPBTGY2425FHNY6E09"
+		]
+	},
+	"version": 1
+}
