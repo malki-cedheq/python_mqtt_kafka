@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sismo 
+      MONGO_INITDB_ROOT_PASSWORD: "%@K97X+eN&ucQuEm" 
+      MONGO_INITDB_DATABASE: sismo       
+      
+    ports:
+      - 27017:27017   
+    restart: unless-stopped
+
+volumes:
+  mongodb:
