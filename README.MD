@@ -54,7 +54,8 @@ KAFKA_BROKER=
 
 ### Criando ambiente Docker mqtt+kafka
 
-`docker compose -f docker-compose.yml up -d`
+1. `docker compose -f docker-compose-mqtt.yml up -d --build`
+2. `docker compose -f docker-compose-kafka.yml up -d --build`
 
 #### Interagindo via shell com o mqtt Docker
 
