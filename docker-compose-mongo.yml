@@ -12,6 +12,11 @@ services:
     ports:
       - 27017:27017   
     restart: unless-stopped
+    networks:  
+      - inner_network
 
 volumes:
   mongodb:
+
+networks:
+  inner_network:  

@@ -20,6 +20,8 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+    networks:  
+      - inner_network    
 
   mosquitto:
     image: eclipse-mosquitto
@@ -32,6 +34,8 @@ services:
     ports:
       - 1883:1883   
     restart: unless-stopped
+    networks:  
+      - inner_network    
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
@@ -45,6 +49,8 @@ services:
     ports:
       - 9091:9091
     restart: unless-stopped
+    networks:  
+      - inner_network    
     
   kafka:
     image: confluentinc/cp-kafka:7.4.0
@@ -71,6 +77,8 @@ services:
      - 9093:9093
      - 29092:29092
     restart: unless-stopped
+    networks:  
+      - inner_network
 
 volumes:
   zookeeper:
@@ -78,3 +86,6 @@ volumes:
   mosquitto:
   prometheus:
   grafana:
+
+networks:
+  inner_network:  
