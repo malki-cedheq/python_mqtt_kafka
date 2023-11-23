@@ -6,6 +6,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
+    # user: "1003" # id -u
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -21,6 +22,9 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
+    # user: "1003" # id -u
+    environment:
+      GF_PATHS_CONFIG : /var/lib/grafana/config/grafana.ini        
     volumes:
       - ./grafana:/var/lib/grafana
     ports:
@@ -55,7 +59,6 @@ services:
     environment:
      ZOOKEEPER_CLIENT_PORT : 9091
      ZOOKEEPER_TICK_TIME : 2000
-
     volumes:
       - zookeeper:/zookeeper
     ports:
