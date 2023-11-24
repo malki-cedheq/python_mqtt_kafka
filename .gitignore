@@ -1,4 +1,5 @@
 #ignores
+.venv
 __pycache__/
 /mosquitto/data/*
 /mosquitto/log/*
@@ -22,3 +23,8 @@ __pycache__/
 
 !/grafana/.disposable
 !/grafana/plugins
+!/grafana/config
+!/grafana/csv
+!/grafana/png
+!/grafana/alerting
+!/grafana/grafana.db*
