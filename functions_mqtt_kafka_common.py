@@ -21,7 +21,7 @@ def subscribe_and_produce(
     """
 
     def on_message(client, userdata, msg):
-        print(f"Recebeu `{msg.payload.decode()}` do tópico `{msg.topic}`")
+        # print(f"Recebeu `{msg.payload.decode()}` do tópico `{msg.topic}`")
         kafka_producer_produce(
             kafka_producer[0], kafka_producer[1], msg.payload.decode()
         )

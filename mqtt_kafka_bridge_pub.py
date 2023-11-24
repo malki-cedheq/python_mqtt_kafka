@@ -50,12 +50,12 @@ def run():
     while True:
         time.sleep(1)  # segundos
         # create white noise series
-        series = [gauss(0.0, 1.0) for i in range(1000)]
-        msg = json.dumps({'series': series, 'msg_count': msg_count})
+        series = [gauss(0.0, 1.0) for i in range(10)]
+        msg = json.dumps({"series": series, "msg_count": msg_count})
         result_mqtt = mqtt_publish(
             client_mqtt, topic="contador", msg=msg
         )  # publica msg num tópico
-        print(result_mqtt)
+        # print(result_mqtt)
         msg_count += 1
 
 

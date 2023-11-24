@@ -54,7 +54,7 @@ def kafka_producer_produce(producer: Producer, topic: str, msg_payload: str):
     msg_payload: string a ser publicada
     """
     producer.produce(msg_payload.encode("ascii"))
-    print("LOG: KAFKA: Publicou {} no tópico {}".format(msg_payload, topic))
+    # print("LOG: KAFKA: Publicou {} no tópico {}".format(msg_payload, topic))
 
 
 def kafka_publish(client_kafka: KafkaClient, topic: str, msg_payload: str):
