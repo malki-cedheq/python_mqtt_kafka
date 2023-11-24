@@ -1,4 +1,5 @@
 #ignores
+.env
 .venv
 __pycache__/
 /mosquitto/data/*
