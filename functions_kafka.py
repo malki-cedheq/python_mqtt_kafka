@@ -81,7 +81,7 @@ def kafka_sync_consumer(client_kafka: KafkaClient, topico: str) -> None:
     topic = client_kafka.topics[topico]
     consumer = topic.get_simple_consumer()
     for message in consumer:
-        if message is not None:
+        if message != None:
             msg_payload = (message.value).decode("utf-8")
             msg_counter = message.offset
             print(

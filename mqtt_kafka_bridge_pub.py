@@ -9,22 +9,27 @@ Criado em: 01/06/2023
 Atualizado em: 21/06/2023
 """
 
-import uuid
 import time
+import uuid
 from datetime import datetime
+
+from random import gauss
+from random import seed
+
+import json
+
 from functions_mqtt import connect_mqtt, mqtt_publish
 from variables import (
-    MQTT_BROKER,
-    MQTT_PORT,
-    MQTT_USERNAME,
-    MQTT_PASSWORD,
-    MQTT_PROTOCOL,
     KAFKA_BROKER,
+    KAFKA_PASSWORD,
     KAFKA_PORT,
     KAFKA_USERNAME,
-    KAFKA_PASSWORD,
+    MQTT_BROKER,
+    MQTT_PASSWORD,
+    MQTT_PORT,
+    MQTT_PROTOCOL,
+    MQTT_USERNAME,
 )
-
 
 CLIENT_ID = "{}".format(
     uuid.uuid5(uuid.NAMESPACE_DNS, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
@@ -40,9 +45,13 @@ def run():
     client_mqtt.loop_start()
 
     msg_count = 0
+    # seed random number generator
+    seed(1)
     while True:
-        time.sleep(3)  # segundos
-        msg = f"msg_count: {msg_count}"
+        time.sleep(1)  # segundos
+        # create white noise series
+        series = [gauss(0.0, 1.0) for i in range(1000)]
+        msg = json.dumps({'series': series, 'msg_count': msg_count})
         result_mqtt = mqtt_publish(
             client_mqtt, topic="contador", msg=msg
         )  # publica msg num tópico

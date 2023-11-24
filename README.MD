@@ -54,8 +54,13 @@ KAFKA_BROKER=
 
 ### Criando ambiente Docker mqtt+kafka
 
-1. `docker compose -f docker-compose-mqtt.yml up -d --build`
-2. `docker compose -f docker-compose-kafka.yml up -d --build`
+#### Individualmente
+1. `docker compose -f docker-compose-mqtt.yml up -d --force-recreate`
+2. `docker compose -f docker-compose-kafka.yml up -d --force-recreate`
+
+#### Ambiente completo
+1. `docker compose -f docker-compose.yml up -d --force-recreate`
+
 
 #### Interagindo via shell com o mqtt Docker
 
@@ -70,6 +75,7 @@ KAFKA_BROKER=
 `poetry install`
 
 ## Executando aplicações
+`poetry shell`
 
 `poetry run python3 arquivo.py`
 
@@ -89,6 +95,37 @@ KAFKA_BROKER=
 
 1. mqtt_kafka_bridge_pub.py publica mensagens em um tópico do broker MQTT
 2. mqtt_kafka_bridge_sub.py subscreve em um tópico do broker MQTT, e ao receber uma nova mensagem no referido tópico encaminha esta mensagem, produz, no mesmo tópico do broker do cluster KAFKA.
+
+# Acessando as interfaces WEB
+
+## Interface do Prometheus para seleção de métricas
+
+`http://localhost:9090`
+
+### Lista de métricas
+
+`http://localhost:9091/metrics`
+
+## Interface do Grafana para visualização de gráficos
+
+`http://localhost:3000`
+
+# Manutenção do docker
+> Remove todos os conteiners
+
+`docker rm -f $(docker ps -a -q)`
+
+> Remove todos os volumes
+
+`docker volume rm -f $(docker volume ls -q)`
+
+> Remove as redes inutilizadas
+
+`docker network rm -f $(docker network list -q)`
+
+> Remove todas as imagens armazenas
+
+`docker images rmi -f $(docker images -a -q)`
 
 # Referências externas
 

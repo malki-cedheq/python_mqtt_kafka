@@ -8,13 +8,9 @@ Atualizado em: 19/06/2023
 """
 
 import time
+
 from functions_kafka import connect_kafka, kafka_publish
-from variables import (
-    KAFKA_BROKER,
-    KAFKA_PORT,
-    KAFKA_USERNAME,
-    KAFKA_PASSWORD,
-)
+from variables import KAFKA_BROKER, KAFKA_PASSWORD, KAFKA_PORT, KAFKA_USERNAME
 
 
 def run():

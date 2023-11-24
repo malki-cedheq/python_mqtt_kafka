@@ -7,12 +7,7 @@ Criado em: 01/06/2023
 Atualizado em: 19/06/2023
 """
 from functions_kafka import connect_kafka, kafka_sync_consumer
-from variables import (
-    KAFKA_BROKER,
-    KAFKA_PORT,
-    KAFKA_USERNAME,
-    KAFKA_PASSWORD,
-)
+from variables import KAFKA_BROKER, KAFKA_PASSWORD, KAFKA_PORT, KAFKA_USERNAME
 
 
 def run():

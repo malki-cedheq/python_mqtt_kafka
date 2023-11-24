@@ -6,8 +6,8 @@ Criado em: 21/06/2023
 Atualizado em: 21/06/2023
 """
 
+from functions_kafka import Producer, kafka_producer_produce
 from functions_mqtt import mqtt_client
-from functions_kafka import kafka_producer_produce, Producer
 
 
 def subscribe_and_produce(

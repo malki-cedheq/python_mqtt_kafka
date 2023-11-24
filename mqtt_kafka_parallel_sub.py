@@ -11,18 +11,19 @@ Atualizado em: 21/06/2023
 
 import uuid
 from datetime import datetime
+
 from functions_kafka import connect_kafka, kafka_sync_consumer
 from functions_mqtt import connect_mqtt, subscribe
 from variables import (
-    MQTT_BROKER,
-    MQTT_PORT,
-    MQTT_USERNAME,
-    MQTT_PASSWORD,
-    MQTT_PROTOCOL,
     KAFKA_BROKER,
+    KAFKA_PASSWORD,
     KAFKA_PORT,
     KAFKA_USERNAME,
-    KAFKA_PASSWORD,
+    MQTT_BROKER,
+    MQTT_PASSWORD,
+    MQTT_PORT,
+    MQTT_PROTOCOL,
+    MQTT_USERNAME,
 )
 
 CLIENT_ID = "{}".format(
