@@ -6,7 +6,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    # user: "1003" # id -u    
+    user: "0:0" # id -u
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -17,14 +17,43 @@ services:
         mode: bridge
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:  
+      - rede          
     restart: unless-stopped
 
+  pg_grafana:
+    container_name: pg_grafana
+    image: postgres:15
+    environment:
+      POSTGRES_DB: my_grafana_db
+      POSTGRES_USER: my_grafana_user
+      POSTGRES_PASSWORD: my_grafana_pwd
+    ports:
+      - target: 5432
+        host_ip: 0.0.0.0
+        published: "5499"
+        protocol: tcp
+        mode: bridge
+    volumes:
+      - pg_grafana:/var/lib/postgresql/data
+    networks:  
+      - rede           
+    restart: unless-stopped      
+
   grafana:
+    depends_on:
+      - pg_grafana
     image: grafana/grafana
     container_name: grafana
-    # user: "1003" # id -u
     environment:
-      GF_PATHS_CONFIG : /var/lib/grafana/config/grafana.ini
+      GF_PATHS_CONFIG : /var/lib/grafana/config/grafana.ini 
+      GF_DATABASE_TYPE: postgres
+      GF_DATABASE_HOST: pg_grafana:5432
+      GF_DATABASE_NAME: my_grafana_db
+      GF_DATABASE_USER: my_grafana_user
+      GF_DATABASE_PASSWORD: my_grafana_pwd
+      GF_DATABASE_SSL_MODE: disable             
+    user: "1000:1000" # id      
     volumes:
       - ./grafana:/var/lib/grafana
     ports:
@@ -35,24 +64,30 @@ services:
         mode: bridge
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    restart: unless-stopped
     networks:  
-      - inner_network    
+      - rede          
+    restart: unless-stopped
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper
     environment:
      ZOOKEEPER_CLIENT_PORT : 9091
-     ZOOKEEPER_TICK_TIME : 2000
-
+     ZOOKEEPER_TICK_TIME : 2000         
     volumes:
       - zookeeper:/zookeeper
     ports:
-      - 9091:9091
-    restart: unless-stopped
+      - target: 9091
+        host_ip: 0.0.0.0
+        published: "9091"
+        protocol: tcp
+        mode: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:  
-      - inner_network
+      - rede       
+    restart: unless-stopped
+   
     
   kafka:
     image: confluentinc/cp-kafka:7.4.0
@@ -70,23 +105,41 @@ services:
       KAFKA_ADVERTISED_LISTENERS : PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092      
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR : 1
       KAFKA_METRICS: 9093      
-      KAFKA_OPTS: "-javaagent:/kafka/prometheus/jmx_prometheus_javaagent-0.18.0.jar=9093:/kafka/prometheus/kafka_broker.yml"                            
+      KAFKA_OPTS: "-javaagent:/kafka/prometheus/jmx_prometheus_javaagent-0.18.0.jar=9093:/kafka/prometheus/kafka_broker.yml" 
+      user: "1000:1000" # id -u                                 
     volumes:
       - kafka:/kafka
       - ./prometheus:/kafka/prometheus
     ports:
-     - 9092:9092
-     - 9093:9093
-     - 29092:29092
-    restart: unless-stopped
+      - target: 9092
+        host_ip: 0.0.0.0
+        published: "9092"
+        protocol: tcp
+        mode: bridge
+      - target: 9093
+        host_ip: 0.0.0.0
+        published: "9093"
+        protocol: tcp
+        mode: bridge
+      - target: 29092
+        host_ip: 0.0.0.0
+        published: "29092"
+        protocol: tcp
+        mode: bridge                
+    extra_hosts:
+      - "host.docker.internal:host-gateway"     
     networks:  
-      - inner_network
+      - rede      
+    restart: unless-stopped
 
 volumes:
   zookeeper:
+    name: zookeeper_vol0
   kafka:
-  prometheus:
-  grafana:
+    name: kafka_vol0
+  pg_grafana:
+    name: pg_grafana_vol0
 
 networks:
-  inner_network:  
+  rede:
+    name: kafka_env_net0
