@@ -71,7 +71,7 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
-    user: "1000:1000" # id -u    
+    # user: "1000:1000" # id -u    
     volumes:
       - ./mosquitto:/mosquitto
       - ./mosquitto/config:/mosquitto/config
