@@ -54,9 +54,9 @@ KAFKA_BROKER=
 
 ### Alterar a permissão dos diretório
 ```
-chmod -R 777 ./mosquitto/log
-chmod -R 777 ./mosquitto/config
-chmod -R 777 ./mosquitto/data
+sudo chmod -R 777 ./mosquitto
+sudo chmod -R 777 ./grafana
+sudo chmod -R 777 ./prometheus
 ```
 
 ### Criar network propria
