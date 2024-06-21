@@ -6,6 +6,7 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
+    user: "1003" # id
     volumes:
       - ./mosquitto:/mosquitto
       - ./mosquitto/config:/mosquitto/config
@@ -15,10 +16,12 @@ services:
       - 1883:1883   
     restart: unless-stopped
     networks:  
-      - inner_network
+      - mqtt_kafka
 
 volumes:
   mosquitto:
 
 networks:
-  inner_network:  
+  mqtt_kafka:  
+  sismo:
+    external: true

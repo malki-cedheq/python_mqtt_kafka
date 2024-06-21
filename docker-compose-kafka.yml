@@ -6,7 +6,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    # user: "1003" # id -u    
+    user: "1003" # id -u    
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -18,11 +18,12 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
+    
 
   grafana:
     image: grafana/grafana
     container_name: grafana
-    # user: "1003" # id -u
+    user: "1003" # id -u
     environment:
       GF_PATHS_CONFIG : /var/lib/grafana/config/grafana.ini
     volumes:
@@ -37,7 +38,8 @@ services:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
     networks:  
-      - inner_network    
+      - mqtt_kafka
+      - sismo  
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
@@ -52,7 +54,8 @@ services:
       - 9091:9091
     restart: unless-stopped
     networks:  
-      - inner_network
+      - mqtt_kafka
+      - sismo
     
   kafka:
     image: confluentinc/cp-kafka:7.4.0
@@ -80,7 +83,8 @@ services:
      - 29092:29092
     restart: unless-stopped
     networks:  
-      - inner_network
+      - mqtt_kafka
+      - sismo
 
 volumes:
   zookeeper:
@@ -89,4 +93,6 @@ volumes:
   grafana:
 
 networks:
-  inner_network:  
+  mqtt_kafka:  
+  sismo:
+    external: true
