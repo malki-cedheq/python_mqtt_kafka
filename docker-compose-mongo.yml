@@ -3,7 +3,7 @@ services:
   mongo:
     image: mongo
     container_name: mongo_container
-    user: "1003" # id
+    user: "0" # id
     environment:
       MONGO_INITDB_ROOT_USERNAME: sismo 
       MONGO_INITDB_ROOT_PASSWORD: "%@K97X+eN&ucQuEm" 

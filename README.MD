@@ -52,6 +52,13 @@ KAFKA_BROKER=
 
 ## Executando serviços com Docker
 
+### Alterar a permissão dos diretório
+```
+chmod -R 777 ./mosquitto/log
+chmod -R 777 ./mosquitto/config
+chmod -R 777 ./mosquitto/data
+```
+
 ### Criar network propria
 
 1. `docker network create sismo`

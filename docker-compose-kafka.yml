@@ -23,7 +23,7 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
-    user: "1003" # id -u
+    user: "0" # id -u
     environment:
       GF_PATHS_CONFIG : /var/lib/grafana/config/grafana.ini
     volumes:
