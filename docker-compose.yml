@@ -6,7 +6,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    user: "0:0" # id -u
+    user: "1003" # id -u
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -18,7 +18,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:  
-      - rede          
+      - mqtt_kafka
+      - sismo       
     restart: unless-stopped
 
   pg_grafana:
@@ -37,7 +38,8 @@ services:
     volumes:
       - pg_grafana:/var/lib/postgresql/data
     networks:  
-      - rede           
+      - mqtt_kafka
+      - sismo         
     restart: unless-stopped      
 
   grafana:
@@ -53,7 +55,7 @@ services:
       GF_DATABASE_USER: my_grafana_user
       GF_DATABASE_PASSWORD: my_grafana_pwd
       GF_DATABASE_SSL_MODE: disable             
-    user: "1000:1000" # id      
+    user: "1003" # id      
     volumes:
       - ./grafana:/var/lib/grafana
     ports:
@@ -65,7 +67,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:  
-      - rede          
+      - mqtt_kafka
+      - sismo       
     restart: unless-stopped
 
   mosquitto:
@@ -86,7 +89,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:  
-      - rede        
+      - mqtt_kafka
+      - sismo      
     restart: unless-stopped  
 
   zookeeper:
@@ -106,7 +110,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:  
-      - rede       
+      - mqtt_kafka
+      - sismo     
     restart: unless-stopped
    
     
@@ -127,7 +132,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR : 1
       KAFKA_METRICS: 9093      
       KAFKA_OPTS: "-javaagent:/kafka/prometheus/jmx_prometheus_javaagent-0.18.0.jar=9093:/kafka/prometheus/kafka_broker.yml" 
-      user: "1000:1000" # id -u                                 
+      user: "1003" # id -u                                 
     volumes:
       - kafka:/kafka
       - ./prometheus:/kafka/prometheus
@@ -150,7 +155,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"     
     networks:  
-      - rede      
+      - mqtt_kafka
+      - sismo
     restart: unless-stopped
 
 volumes:

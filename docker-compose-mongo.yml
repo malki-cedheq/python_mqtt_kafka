@@ -1,22 +1,27 @@
-version: '3'
+version: '3.8'
 services:
   mongo:
     image: mongo
-    container_name: mongo
-    
+    container_name: mongo_container
+    user: "0"  # Executar como root para evitar problemas de permissão
     environment:
-      MONGO_INITDB_ROOT_USERNAME: sismo 
-      MONGO_INITDB_ROOT_PASSWORD: "%@K97X+eN&ucQuEm" 
-      MONGO_INITDB_DATABASE: sismo       
-      
+      MONGO_INITDB_ROOT_USERNAME: sismo
+      MONGO_INITDB_ROOT_PASSWORD: "%@K97X+eN&ucQuEm"
+      MONGO_INITDB_DATABASE: sismo
     ports:
-      - 27017:27017   
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
     restart: unless-stopped
-    networks:  
-      - inner_network
+    networks:
+      - mqtt_kafka
+      - sismo
 
 volumes:
-  mongodb:
+  mongodb_data:
+    driver: local
 
 networks:
-  inner_network:  
+  mqtt_kafka:
+  sismo:
+    external: true

@@ -6,7 +6,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    user: "0:0" # id -u
+    user: "1003" # id -u    
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -17,34 +17,15 @@ services:
         mode: bridge
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    networks:  
-      - rede          
     restart: unless-stopped
-
-  pg_grafana:
-    container_name: pg_grafana
-    image: postgres:15
-    environment:
-      POSTGRES_DB: my_grafana_db
-      POSTGRES_USER: my_grafana_user
-      POSTGRES_PASSWORD: my_grafana_pwd
-    ports:
-      - target: 5432
-        host_ip: 0.0.0.0
-        published: "5499"
-        protocol: tcp
-        mode: bridge
-    volumes:
-      - pg_grafana:/var/lib/postgresql/data
-    networks:  
-      - rede           
-    restart: unless-stopped      
+    
 
   grafana:
     depends_on:
       - pg_grafana
     image: grafana/grafana
     container_name: grafana
+    user: "0" # id -u
     environment:
       GF_PATHS_CONFIG : /var/lib/grafana/config/grafana.ini 
       GF_DATABASE_TYPE: postgres
@@ -67,6 +48,9 @@ services:
     networks:  
       - rede          
     restart: unless-stopped
+    networks:  
+      - mqtt_kafka
+      - sismo  
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
@@ -87,7 +71,9 @@ services:
     networks:  
       - rede       
     restart: unless-stopped
-   
+    networks:  
+      - mqtt_kafka
+      - sismo
     
   kafka:
     image: confluentinc/cp-kafka:7.4.0
@@ -131,6 +117,9 @@ services:
     networks:  
       - rede      
     restart: unless-stopped
+    networks:  
+      - mqtt_kafka
+      - sismo
 
 volumes:
   zookeeper:
@@ -141,5 +130,6 @@ volumes:
     name: pg_grafana_vol0
 
 networks:
-  rede:
-    name: kafka_env_net0
+  mqtt_kafka:  
+  sismo:
+    external: true

@@ -6,7 +6,7 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
-    # user: "1000:1000" # id -u    
+    #user: "0" # id
     volumes:
       - ./mosquitto:/mosquitto
       - ./mosquitto/config:/mosquitto/config
@@ -23,3 +23,14 @@ services:
     networks:  
       - rede        
     restart: unless-stopped
+    networks:  
+      - mqtt_kafka
+      - sismo
+
+volumes:
+  mosquitto:
+
+networks:
+  mqtt_kafka:  
+  sismo:
+    external: true

@@ -52,15 +52,28 @@ KAFKA_BROKER=
 
 ## Executando serviços com Docker
 
+### Alterar a permissão dos diretório
+```
+sudo chmod -R 777 ./mosquitto
+sudo chmod -R 777 ./grafana
+sudo chmod -R 777 ./prometheus
+```
+
+### Criar network propria
+
+1. `docker network create sismo`
+
 ### Criando ambiente Docker mqtt+kafka
 
 #### Individualmente
+
 1. `docker compose -f docker-compose-mqtt.yml up -d --force-recreate`
-2. `docker compose -f docker-compose-kafka.yml up -d --force-recreate`
+2. `docker compose -f docker-compose-mongo.yml up -d --force-recreate`
+3. `docker compose -f docker-compose-kafka.yml up -d --force-recreate`
 
 #### Ambiente completo
-1. `docker compose -f docker-compose.yml up -d --force-recreate`
 
+1. `docker compose -f docker-compose.yml up -d --force-recreate`
 
 #### Interagindo via shell com o mqtt Docker
 
@@ -75,6 +88,7 @@ KAFKA_BROKER=
 `poetry install`
 
 ## Executando aplicações
+
 `poetry shell`
 
 `poetry run python3 arquivo.py`
