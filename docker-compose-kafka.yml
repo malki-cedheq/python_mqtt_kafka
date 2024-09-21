@@ -33,8 +33,7 @@ services:
       GF_DATABASE_NAME: my_grafana_db
       GF_DATABASE_USER: my_grafana_user
       GF_DATABASE_PASSWORD: my_grafana_pwd
-      GF_DATABASE_SSL_MODE: disable             
-    user: "1000:1000" # id      
+      GF_DATABASE_SSL_MODE: disable                  
     volumes:
       - ./grafana:/var/lib/grafana
     ports:
@@ -44,9 +43,7 @@ services:
         protocol: tcp
         mode: bridge
     extra_hosts:
-      - "host.docker.internal:host-gateway"
-    networks:  
-      - rede          
+      - "host.docker.internal:host-gateway"       
     restart: unless-stopped
     networks:  
       - mqtt_kafka
@@ -67,9 +64,7 @@ services:
         protocol: tcp
         mode: bridge
     extra_hosts:
-      - "host.docker.internal:host-gateway"
-    networks:  
-      - rede       
+      - "host.docker.internal:host-gateway" 
     restart: unless-stopped
     networks:  
       - mqtt_kafka
@@ -113,9 +108,7 @@ services:
         protocol: tcp
         mode: bridge                
     extra_hosts:
-      - "host.docker.internal:host-gateway"     
-    networks:  
-      - rede      
+      - "host.docker.internal:host-gateway"         
     restart: unless-stopped
     networks:  
       - mqtt_kafka
