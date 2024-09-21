@@ -6,7 +6,7 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
-    user: "0" # id
+    #user: "0" # id
     volumes:
       - ./mosquitto:/mosquitto
       - ./mosquitto/config:/mosquitto/config
